@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Hexo</title>
+  <title>Nginx 泛域名解析 | Hexo</title>
   
   
   
@@ -42,39 +42,14 @@
 
     <div class="container">
         <div data-pager-shell>
-            <ul class="Index">
-  
-  
-    <li>
-      <article class='ListView'>
-    <header class="title">
-      
-        <h1>
-          <a href="/2019/09/14/Nginx-泛域名解析/">Nginx 泛域名解析</a>
-        </h1>
-      
-      <div class='ListMeta'>
-  <time datetime="2019-09-13T16:43:55.000Z" itemprop="datePublished">
-    2019-09-14
-  </time>
-  
-  | 
-  <ul>
-    
-  <li class="meta-text">
-  { <a href="/tags/nginx/">nginx</a> }
-  </li>
-
-
-  </ul>
-  
-  
-</div>
-
+            <div>
+  <article class='ContentView'>
+    <header class='PageTitle'>
+        <h1>Nginx 泛域名解析</h1>
     </header>
-    <div>
-      
-        <p>在配置 nginx 独立访问的子域名的时候我们一般会有以下两种解决方案:</p>
+
+    <section>
+      <p>在配置 nginx 独立访问的子域名的时候我们一般会有以下两种解决方案:</p>
 <ol>
 <li>在创建子域名的时候以脚本的形式生成单个的 vhost config, 在主配置中使用 <code>include path/to/your/vhost/*.conf</code> 的形式引入配置文件，然后重启 nginx 到达以实现独立子域名的解析；</li>
 <li>使用 nginx 的泛域名解析，打到多个二级域名的目的</li>
@@ -92,53 +67,35 @@
 
 <p>htdocs 就是默认的代码存放路径，account 是用户账户项目的代码，comment 是评论相关的用户代码，detail 是详情情况相关的用户代码，对应程序以 account.domain.com、comment.domain.com 类似的方式访问。以下为配置示例:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen  80;</span><br><span class="line">    </span><br><span class="line">    server_name ~^(?&lt;subdomain&gt;.+)\.domain\.com$;</span><br><span class="line">    </span><br><span class="line">    root    /var/htdocs/$subdomain;</span><br><span class="line">    </span><br><span class="line">    index   index.php index.html index.shtml index.htm;</span><br><span class="line">    </span><br><span class="line">    fastcgi_intercept_errors    on;</span><br><span class="line">    </span><br><span class="line">    error_page  404 = /404.html;</span><br><span class="line">    </span><br><span class="line">    location / &#123;</span><br><span class="line">        try_files $uri $uri/ = 404;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    location = /50x.html &#123;</span><br><span class="line">        root html;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    location ~\.php$ &#123;</span><br><span class="line">        fastcgi_pass    127.0.0.1:9001;</span><br><span class="line">        fastcgi_index   index.php;</span><br><span class="line">        fastcgt_param   SCRIPT_FILENAME $ducoment_root$fastcgi_script_name;</span><br><span class="line">        fastcgi_param   domain  $subdomain;</span><br><span class="line">        include         fastcgi_params;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    location ~ /\.ht &#123;</span><br><span class="line">        deny all;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
       
-    </div>
+
+    </section>
+    
+      <section class='ArticleMeta'>
+          <div>
+            发布于&nbsp;
+            <time datetime="2019-09-13T16:43:55.000Z" itemprop="datePublished">
+              2019-09-14
+            </time>
+          </div>
+          
+            <div>
+              tags: 
+  <li class="meta-text">
+  { <a href="/tags/nginx/">nginx</a> }
+  </li>
+
+
+            </div>
+          
+      </section>
+    
+    
 </article>
 
-    </li>
-  
-    <li>
-      <article class='ListView'>
-    <header class="title">
-      
-        <h1>
-          <a href="/2019/09/13/hello-world/">Hello World</a>
-        </h1>
-      
-      <div class='ListMeta'>
-  <time datetime="2019-09-13T15:43:56.009Z" itemprop="datePublished">
-    2019-09-13
-  </time>
-  
   
 </div>
-
-    </header>
-    <div>
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-</article>
-
-    </li>
-  
-</ul>
-
 
             <footer>
     <div>© 2019 - Jiaqing Xue </div>
